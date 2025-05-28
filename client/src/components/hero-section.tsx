@@ -27,7 +27,7 @@ export default function HeroSection() {
             <div className="flex flex-col sm:flex-row gap-4">
               <button
                 onClick={() => scrollToSection("portfolio")}
-                className="bg-primary text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors duration-200 text-center"
+                className="bg-primary text-white px-8 py-3 rounded-lg font-semibold hover:bg-primary/90 transition-colors duration-200 text-center"
               >
                 {t.hero.viewPortfolio}
               </button>

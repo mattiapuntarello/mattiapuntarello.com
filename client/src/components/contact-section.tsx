@@ -214,7 +214,7 @@ export default function ContactSection() {
                 <Button 
                   type="submit" 
                   disabled={contactMutation.isPending}
-                  className="w-full bg-primary text-white py-3 px-6 rounded-lg font-semibold hover:bg-blue-700 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full bg-primary text-white py-3 px-6 rounded-lg font-semibold hover:bg-primary/90 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {contactMutation.isPending ? (
                     <span className="inline-flex items-center">
