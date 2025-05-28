@@ -1,6 +1,8 @@
 import { Code } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function HeroSection() {
+  const { t } = useLanguage();
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
@@ -14,27 +16,26 @@ export default function HeroSection() {
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div className="order-2 lg:order-1">
             <h1 className="text-4xl lg:text-6xl font-bold text-secondary mb-6 leading-tight">
-              Ciao, sono <span className="text-primary">Mattia</span>
+              {t.hero.greeting} <span className="text-primary">{t.hero.name}</span>
             </h1>
             <h2 className="text-xl lg:text-2xl text-gray-600 mb-8 font-light">
-              Full-Stack Developer & UI/UX Designer
+              {t.hero.title}
             </h2>
             <p className="text-lg text-gray-600 mb-8 leading-relaxed">
-              Creo esperienze digitali moderne e funzionali che combinano design elegante e tecnologia all'avanguardia. 
-              Specializzato in React, Angular e soluzioni web innovative.
+              {t.hero.description}
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <button
                 onClick={() => scrollToSection("portfolio")}
                 className="bg-primary text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors duration-200 text-center"
               >
-                Vedi Portfolio
+                {t.hero.viewPortfolio}
               </button>
               <button
                 onClick={() => scrollToSection("contact")}
                 className="border-2 border-primary text-primary px-8 py-3 rounded-lg font-semibold hover:bg-primary hover:text-white transition-all duration-200 text-center"
               >
-                Contattami
+                {t.hero.contactMe}
               </button>
             </div>
           </div>
