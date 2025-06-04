@@ -7,6 +7,12 @@ import { portfolioProjects, timelineItems, blogPosts } from "@shared/schema";
 async function seedDatabase() {
   console.log("🌱 Seeding database...");
 
+  // Clear existing data first
+  await db.delete(blogPosts);
+  await db.delete(timelineItems);
+  await db.delete(portfolioProjects);
+  console.log("✓ Existing data cleared");
+
   // Seed portfolio projects
   const projects = [
     {
