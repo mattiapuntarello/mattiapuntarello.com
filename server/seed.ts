@@ -1,3 +1,6 @@
+import { config } from 'dotenv';
+config();
+
 import { db } from "./db";
 import { portfolioProjects, timelineItems, blogPosts } from "@shared/schema";
 
