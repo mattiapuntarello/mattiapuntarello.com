@@ -1,5 +1,6 @@
 import { Code } from "lucide-react";
 import { useLanguage } from "@/context/language-context";
+import avatarImage from "@/assets/Profile_pic.jpeg";
 
 export default function HeroSection() {
   const { t } = useLanguage();
@@ -42,8 +43,8 @@ export default function HeroSection() {
           </div>
           <div className="order-1 lg:order-2 flex justify-center">
             <div className="relative">
-              <img
-                src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=400"
+            <img
+                src={avatarImage}
                 alt="Mattia Puntarello - Sviluppatore Full-Stack"
                 className="w-80 h-80 rounded-2xl shadow-2xl object-cover"
               />

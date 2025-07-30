@@ -1,4 +1,5 @@
-import { createContext, useContext, useState, ReactNode } from "react";
+// language-context.tsx
+import { createContext, useContext, useState, ReactNode, useCallback } from "react";
 import { translations, Language } from "@shared/translations";
 
 interface LanguageContextType {
@@ -9,16 +10,37 @@ interface LanguageContextType {
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
+// Helper per risolvere "form.name" su oggetti annidati
+function getByPath(obj: any, path?: string) {
+  if (!path) return obj;
+  return path.split(".").reduce((acc, k) => (acc != null ? acc[k] : undefined), obj);
+}
+
 export function LanguageProvider({ children }: { children: ReactNode }) {
   const [language, setLanguage] = useState<Language>("it");
 
-  const t = (section: keyof typeof translations.it, key?: string) => {
-    const sectionData = translations[language][section];
-    if (key && typeof sectionData === 'object' && sectionData !== null) {
-      return (sectionData as any)[key] || translations.it[section][key as keyof typeof translations.it[typeof section]];
-    }
-    return sectionData || translations.it[section];
-  };
+  const t = useCallback(
+    (section: keyof typeof translations.it, key?: string) => {
+      // base corrente
+      const base = translations[language][section];
+
+      // 1) prova lingua corrente
+      const v1 = getByPath(base, key);
+      if (v1 != null) return v1;
+
+      // 2) fallback italiano
+      const v2 = getByPath(translations.it[section], key);
+      if (v2 != null) return v2;
+
+      // 3) fallback inglese
+      const v3 = getByPath(translations.en[section], key);
+      if (v3 != null) return v3;
+
+      // 4) fallback minimale: ritorna la chiave
+      return key ?? section;
+    },
+    [language]
+  );
 
   return (
     <LanguageContext.Provider value={{ language, setLanguage, t }}>

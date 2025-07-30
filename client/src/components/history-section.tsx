@@ -3,9 +3,9 @@ import { TimelineItem } from "@shared/schema";
 import { useLanguage } from "@/context/language-context";
 
 export default function HistorySection() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const { data: timeline, isLoading } = useQuery<TimelineItem[]>({
-    queryKey: ["/api/timeline"],
+    queryKey: [`/api/timeline?lang=${language}`],
   });
 
   if (isLoading) {
@@ -38,9 +38,9 @@ export default function HistorySection() {
     <section id="history" className="py-16 lg:py-24 bg-background">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-3xl lg:text-4xl font-bold text-secondary mb-4">La Mia Storia</h2>
+          <h2 className="text-3xl lg:text-4xl font-bold text-secondary mb-4">{t("history", "title")}</h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Il mio percorso professionale ed educativo nel mondo della tecnologia e del design.
+            {t("history", "description")}
           </p>
         </div>
 

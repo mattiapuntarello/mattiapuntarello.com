@@ -11,10 +11,13 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
 import { insertContactMessageSchema } from "@shared/schema";
+import { useLanguage } from "@/context/language-context";
+
 
 type ContactFormData = z.infer<typeof insertContactMessageSchema>;
 
 export default function ContactSection() {
+  const { t } = useLanguage();
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
@@ -32,15 +35,15 @@ export default function ContactSection() {
     mutationFn: (data: ContactFormData) => apiRequest("POST", "/api/contact", data),
     onSuccess: () => {
       toast({
-        title: "Messaggio inviato!",
-        description: "Grazie per il tuo messaggio. Ti risponderò al più presto.",
+        title: t("contact", "toast.success"),
+        description: t("contact", "toast.successDesc"),
       });
       form.reset();
     },
     onError: (error: any) => {
       toast({
-        title: "Errore",
-        description: error.message || "Si è verificato un errore nell'invio del messaggio.",
+        title: t("contact", "toast.error"),
+        description: error.message || t("contact", "toast.errorDesc"),
         variant: "destructive",
       });
     },
@@ -54,22 +57,22 @@ export default function ContactSection() {
     <section id="contact" className="py-16 lg:py-24 bg-background">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-3xl lg:text-4xl font-bold text-secondary mb-4">Contattami</h2>
+          <h2 className="text-3xl lg:text-4xl font-bold text-secondary mb-4">{t("contact", "title")}</h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Hai un progetto in mente? Collaboriamo per trasformare le tue idee in realtà digitali innovative.
+            {t("contact", "description")}
           </p>
         </div>
 
         <div className="grid lg:grid-cols-2 gap-12">
           <div>
-            <h3 className="text-2xl font-semibold text-secondary mb-6">Mettiamoci in contatto</h3>
+            <h3 className="text-2xl font-semibold text-secondary mb-6">{t("contact", "getInTouch")}</h3>
             <div className="space-y-6">
               <div className="flex items-center gap-4">
                 <div className="bg-primary/10 p-3 rounded-lg">
                   <Mail className="text-primary w-6 h-6" />
                 </div>
                 <div>
-                  <p className="font-medium text-secondary">Email</p>
+                  <p className="font-medium text-secondary">{t("contact", "email")}</p>
                   <a 
                     href="mailto:mattia.puntarello@email.com" 
                     className="text-gray-600 hover:text-primary transition-colors"
@@ -83,7 +86,7 @@ export default function ContactSection() {
                   <Phone className="text-primary w-6 h-6" />
                 </div>
                 <div>
-                  <p className="font-medium text-secondary">Telefono</p>
+                  <p className="font-medium text-secondary">{t("contact", "phone")}</p>
                   <a 
                     href="tel:+393123456789" 
                     className="text-gray-600 hover:text-primary transition-colors"
@@ -97,14 +100,14 @@ export default function ContactSection() {
                   <MapPin className="text-primary w-6 h-6" />
                 </div>
                 <div>
-                  <p className="font-medium text-secondary">Ubicazione</p>
+                  <p className="font-medium text-secondary">{t("contact", "location")}</p>
                   <p className="text-gray-600">Milano, Italia</p>
                 </div>
               </div>
             </div>
 
             <div className="mt-8">
-              <h4 className="text-lg font-semibold text-secondary mb-4">Seguimi sui social</h4>
+              <h4 className="text-lg font-semibold text-secondary mb-4">{t("contact", "followSocial")}</h4>
               <div className="flex gap-4">
                 <a
                   href="#"
@@ -142,10 +145,10 @@ export default function ContactSection() {
                   name="name"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-sm font-medium text-secondary">Nome Completo</FormLabel>
+                      <FormLabel className="text-sm font-medium text-secondary">{t("contact", "form.name")}</FormLabel>
                       <FormControl>
                         <Input 
-                          placeholder="Il tuo nome" 
+                          placeholder={t("contact", "form.namePlaceholder")}
                           className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-colors"
                           {...field} 
                         />
@@ -160,11 +163,11 @@ export default function ContactSection() {
                   name="email"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-sm font-medium text-secondary">Email</FormLabel>
+                      <FormLabel className="text-sm font-medium text-secondary">{t("contact", "form.email")}</FormLabel>
                       <FormControl>
                         <Input 
                           type="email"
-                          placeholder="la.tua.email@example.com" 
+                          placeholder={t("contact", "form.emailPlaceholder")}
                           className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-colors"
                           {...field} 
                         />
@@ -179,10 +182,10 @@ export default function ContactSection() {
                   name="subject"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-sm font-medium text-secondary">Oggetto</FormLabel>
+                      <FormLabel className="text-sm font-medium text-secondary">{t("contact", "form.subject")}</FormLabel>
                       <FormControl>
                         <Input 
-                          placeholder="Di cosa vuoi parlare?" 
+                          placeholder={t("contact", "form.subjectPlaceholder")} 
                           className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-colors"
                           {...field} 
                         />
@@ -197,10 +200,10 @@ export default function ContactSection() {
                   name="message"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-sm font-medium text-secondary">Messaggio</FormLabel>
+                      <FormLabel className="text-sm font-medium text-secondary">{t("contact", "form.message")}</FormLabel>
                       <FormControl>
                         <Textarea 
-                          placeholder="Raccontami del tuo progetto..." 
+                          placeholder={t("contact", "form.messagePlaceholder")}
                           rows={4}
                           className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-colors resize-none"
                           {...field} 
@@ -219,12 +222,12 @@ export default function ContactSection() {
                   {contactMutation.isPending ? (
                     <span className="inline-flex items-center">
                       <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
-                      Invio in corso...
+                      {t("contact", "form.sending")}
                     </span>
                   ) : (
                     <span className="inline-flex items-center">
                       <Send className="w-5 h-5 mr-2" />
-                      Invia Messaggio
+                      {t("contact", "form.send")}
                     </span>
                   )}
                 </Button>

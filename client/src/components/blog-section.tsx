@@ -4,9 +4,9 @@ import { BlogPost } from "@shared/schema";
 import { useLanguage } from "@/context/language-context";
 
 export default function BlogSection() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const { data: posts, isLoading } = useQuery<BlogPost[]>({
-    queryKey: ["/api/blog"],
+    queryKey: [`/api/blog?lang=${language}`],
   });
 
   if (isLoading) {
@@ -42,9 +42,9 @@ export default function BlogSection() {
     <section id="blog" className="py-16 lg:py-24 bg-white">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-3xl lg:text-4xl font-bold text-secondary mb-4">Blog & Insights</h2>
+          <h2 className="text-3xl lg:text-4xl font-bold text-secondary mb-4">{t("blog", "title")}</h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Condivido le mie esperienze, tutorial e riflessioni sul mondo dello sviluppo web e del design.
+            {t("blog", "description")}
           </p>
         </div>
 

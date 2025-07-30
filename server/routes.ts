@@ -3,13 +3,17 @@ import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { insertContactMessageSchema } from "@shared/schema";
 import { z } from "zod";
+import { translateProjects, translateTimelineItems, translateBlogPosts } from "@shared/content-translator";
+import { Language } from "@shared/translations";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Portfolio routes
   app.get("/api/portfolio", async (req, res) => {
     try {
+      const language = (req.query.lang as Language) || 'it';
       const projects = await storage.getPortfolioProjects();
-      res.json(projects);
+      const translatedProjects = translateProjects(projects, language);
+      res.json(translatedProjects);
     } catch (error) {
       res.status(500).json({ message: "Failed to fetch portfolio projects" });
     }
@@ -17,8 +21,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.get("/api/portfolio/featured", async (req, res) => {
     try {
+      const language = (req.query.lang as Language) || 'it';
       const projects = await storage.getFeaturedProjects();
-      res.json(projects);
+      const translatedProjects = translateProjects(projects, language);
+      res.json(translatedProjects);
     } catch (error) {
       res.status(500).json({ message: "Failed to fetch featured projects" });
     }
@@ -27,8 +33,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Timeline routes
   app.get("/api/timeline", async (req, res) => {
     try {
+      const language = (req.query.lang as Language) || 'it';
       const timeline = await storage.getTimelineItems();
-      res.json(timeline);
+      const translatedTimeline = translateTimelineItems(timeline, language);
+      res.json(translatedTimeline);
     } catch (error) {
       res.status(500).json({ message: "Failed to fetch timeline items" });
     }
@@ -37,8 +45,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Blog routes
   app.get("/api/blog", async (req, res) => {
     try {
+      const language = (req.query.lang as Language) || 'it';
       const posts = await storage.getPublishedBlogPosts();
-      res.json(posts);
+      const translatedPosts = translateBlogPosts(posts, language);
+      res.json(translatedPosts);
     } catch (error) {
       res.status(500).json({ message: "Failed to fetch blog posts" });
     }
@@ -46,6 +56,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.get("/api/blog/:slug", async (req, res) => {
     try {
+      const language = (req.query.lang as Language) || 'it';
       const { slug } = req.params;
       const post = await storage.getBlogPost(slug);
       
@@ -53,7 +64,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(404).json({ message: "Blog post not found" });
       }
       
-      res.json(post);
+      const translatedPost = translateBlogPosts([post], language)[0];
+      res.json(translatedPost);
     } catch (error) {
       res.status(500).json({ message: "Failed to fetch blog post" });
     }

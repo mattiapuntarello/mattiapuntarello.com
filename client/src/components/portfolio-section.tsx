@@ -4,9 +4,9 @@ import { PortfolioProject } from "@shared/schema";
 import { useLanguage } from "@/context/language-context";
 
 export default function PortfolioSection() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const { data: projects, isLoading } = useQuery<PortfolioProject[]>({
-    queryKey: ["/api/portfolio"],
+    queryKey: [`/api/portfolio?lang=${language}`],
   });
 
   if (isLoading) {
@@ -33,9 +33,9 @@ export default function PortfolioSection() {
     <section id="portfolio" className="py-16 lg:py-24 bg-white">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-3xl lg:text-4xl font-bold text-secondary mb-4">Portfolio</h2>
+          <h2 className="text-3xl lg:text-4xl font-bold text-secondary mb-4">{t("portfolio", "title")}</h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Una selezione dei miei progetti più significativi, dalle applicazioni web moderne alle soluzioni enterprise.
+          {t("portfolio", "description")}
           </p>
         </div>
         

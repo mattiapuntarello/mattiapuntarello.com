@@ -75,6 +75,69 @@ export const translations = {
       consulting: "Consulenza Tecnica",
       training: "Formazione",
       copyright: "© 2024 Mattia Puntarello. Tutti i diritti riservati. | Realizzato con React e ❤️"
+    },
+
+    // Database Content Translations
+    content: {
+      // Portfolio Projects
+      projects: {
+        1: {
+          title: "Piattaforma E-Commerce",
+          description: "Piattaforma completa con Angular, gestione ordini e pagamenti integrati."
+        },
+        2: {
+          title: "Dashboard Analytics",
+          description: "Dashboard interattiva per visualizzazione dati in tempo reale con grafici avanzati."
+        },
+        3: {
+          title: "App Mobile Fitness",
+          description: "Applicazione mobile per il fitness con tracking avanzato e design intuitivo."
+        }
+      },
+
+      // Timeline Items
+      timeline: {
+        1: {
+          title: "Senior Full-Stack Developer",
+          company: "TechCorp Solutions",
+          location: "Milano",
+          description: "Sviluppo di applicazioni enterprise con Angular e .NET, gestione team di 5 sviluppatori e architettura di soluzioni scalabili."
+        },
+        2: {
+          title: "Frontend Developer", 
+          company: "Digital Agency Pro",
+          location: "Roma",
+          description: "Creazione di interfacce utente responsive e moderne per clienti enterprise, implementazione di design systems e ottimizzazione performance."
+        },
+        3: {
+          title: "Laurea Magistrale in Informatica",
+          company: "Università Statale Milano",
+          location: "Milano",
+          description: "Specializzazione in Ingegneria del Software e Human-Computer Interaction. Tesi su \"Architetture Microservizi per Applicazioni Web Scalabili\"."
+        }
+      },
+
+      // Blog Posts
+      blog: {
+        1: {
+          title: "Ottimizzazione Performance in Angular 17",
+          excerpt: "Tecniche avanzate per migliorare le performance delle applicazioni Angular utilizzando le nuove features e best practices.",
+          content: "Contenuto completo del post...",
+          category: "Angular"
+        },
+        2: {
+          title: "Design System: Da Zero a Produzione",
+          excerpt: "Come ho creato un design system completo per una startup, dalle componenti base all'implementazione in codice.",
+          content: "Contenuto completo del post...",
+          category: "Design"
+        },
+        3: {
+          title: "CI/CD per Progetti Angular",
+          excerpt: "Setup completo di pipeline CI/CD per progetti Angular utilizzando GitHub Actions e deployment automatico.",
+          content: "Contenuto completo del post...",
+          category: "DevOps"
+        }
+      }
     }
   },
   en: {
@@ -153,6 +216,69 @@ export const translations = {
       consulting: "Technical Consulting",
       training: "Training",
       copyright: "© 2024 Mattia Puntarello. All rights reserved. | Made with React and ❤️"
+    },
+
+    // Database Content Translations
+    content: {
+      // Portfolio Projects
+      projects: {
+        1: {
+          title: "E-Commerce Platform",
+          description: "Complete platform with Angular, order management and integrated payments."
+        },
+        2: {
+          title: "Analytics Dashboard",
+          description: "Interactive dashboard for real-time data visualization with advanced charts."
+        },
+        3: {
+          title: "Mobile Fitness App",
+          description: "Mobile fitness application with advanced tracking and intuitive design."
+        }
+      },
+
+      // Timeline Items
+      timeline: {
+        1: {
+          title: "Senior Full-Stack Developer",
+          company: "TechCorp Solutions",
+          location: "Milan",
+          description: "Development of enterprise applications with Angular and .NET, managing a team of 5 developers and architecting scalable solutions."
+        },
+        2: {
+          title: "Frontend Developer",
+          company: "Digital Agency Pro", 
+          location: "Rome",
+          description: "Creating responsive and modern user interfaces for enterprise clients, implementing design systems and performance optimization."
+        },
+        3: {
+          title: "Master's Degree in Computer Science",
+          company: "State University of Milan",
+          location: "Milan",
+          description: "Specialization in Software Engineering and Human-Computer Interaction. Thesis on \"Microservice Architectures for Scalable Web Applications\"."
+        }
+      },
+
+      // Blog Posts
+      blog: {
+        1: {
+          title: "Performance Optimization in Angular 17",
+          excerpt: "Advanced techniques to improve Angular application performance using new features and best practices.",
+          content: "Complete post content...",
+          category: "Angular"
+        },
+        2: {
+          title: "Design System: From Zero to Production",
+          excerpt: "How I created a complete design system for a startup, from basic components to code implementation.",
+          content: "Complete post content...",
+          category: "Design"
+        },
+        3: {
+          title: "CI/CD for Angular Projects",
+          excerpt: "Complete setup of CI/CD pipeline for Angular projects using GitHub Actions and automatic deployment.",
+          content: "Complete post content...",
+          category: "DevOps"
+        }
+      }
     }
   }
 };
