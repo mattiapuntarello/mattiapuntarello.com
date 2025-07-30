@@ -1,10 +1,11 @@
-import { db } from "./db";
+import { getDb } from "./db";
 import { portfolioProjects, timelineItems, blogPosts } from "@shared/schema";
 
 export async function seedDatabase() {
   try {
+    const database = await getDb();
     // Check if data already exists
-    const existingProjects = await db.select().from(portfolioProjects).limit(1);
+    const existingProjects = await database.select().from(portfolioProjects).limit(1);
     if (existingProjects.length > 0) {
       console.log("Database already seeded, skipping...");
       return;
@@ -44,7 +45,7 @@ export async function seedDatabase() {
       }
     ];
 
-    await db.insert(portfolioProjects).values(projects);
+    await database.insert(portfolioProjects).values(projects);
     console.log("Portfolio projects seeded successfully");
 
     // Seed timeline items
@@ -84,7 +85,7 @@ export async function seedDatabase() {
       }
     ];
 
-    await db.insert(timelineItems).values(timeline);
+    await database.insert(timelineItems).values(timeline);
     console.log("Timeline items seeded successfully");
 
     // Seed blog posts
@@ -121,7 +122,7 @@ export async function seedDatabase() {
       }
     ];
 
-    await db.insert(blogPosts).values(posts);
+    await database.insert(blogPosts).values(posts);
     console.log("Blog posts seeded successfully");
 
     console.log("Database seeding completed successfully!");

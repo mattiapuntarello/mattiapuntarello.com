@@ -15,7 +15,7 @@ import {
   type ContactMessage,
   type InsertContactMessage
 } from "@shared/schema";
-import { db } from "./db";
+import { getDb } from "./db";
 import { eq } from "drizzle-orm";
 
 export interface IStorage {
@@ -283,17 +283,20 @@ export class MemStorage implements IStorage {
 
 export class DatabaseStorage implements IStorage {
   async getUser(id: number): Promise<User | undefined> {
-    const [user] = await db.select().from(users).where(eq(users.id, id));
+    const database = await getDb();
+    const [user] = await database.select().from(users).where(eq(users.id, id));
     return user || undefined;
   }
 
   async getUserByUsername(username: string): Promise<User | undefined> {
-    const [user] = await db.select().from(users).where(eq(users.username, username));
+    const database = await getDb();
+    const [user] = await database.select().from(users).where(eq(users.username, username));
     return user || undefined;
   }
 
   async createUser(insertUser: InsertUser): Promise<User> {
-    const [user] = await db
+    const database = await getDb();
+    const [user] = await database
       .insert(users)
       .values(insertUser)
       .returning();
@@ -301,17 +304,20 @@ export class DatabaseStorage implements IStorage {
   }
 
   async getPortfolioProjects(): Promise<PortfolioProject[]> {
-    return await db.select().from(portfolioProjects).orderBy(portfolioProjects.order);
+    const database = await getDb();
+    return await database.select().from(portfolioProjects).orderBy(portfolioProjects.order);
   }
 
   async getFeaturedProjects(): Promise<PortfolioProject[]> {
-    return await db.select().from(portfolioProjects)
+    const database = await getDb();
+    return await database.select().from(portfolioProjects)
       .where(eq(portfolioProjects.featured, true))
       .orderBy(portfolioProjects.order);
   }
 
   async createPortfolioProject(insertProject: InsertPortfolioProject): Promise<PortfolioProject> {
-    const [project] = await db
+    const database = await getDb();
+    const [project] = await database
       .insert(portfolioProjects)
       .values(insertProject)
       .returning();
@@ -319,11 +325,13 @@ export class DatabaseStorage implements IStorage {
   }
 
   async getTimelineItems(): Promise<TimelineItem[]> {
-    return await db.select().from(timelineItems).orderBy(timelineItems.order);
+    const database = await getDb();
+    return await database.select().from(timelineItems).orderBy(timelineItems.order);
   }
 
   async createTimelineItem(insertItem: InsertTimelineItem): Promise<TimelineItem> {
-    const [item] = await db
+    const database = await getDb();
+    const [item] = await database
       .insert(timelineItems)
       .values(insertItem)
       .returning();
@@ -331,22 +339,26 @@ export class DatabaseStorage implements IStorage {
   }
 
   async getBlogPosts(): Promise<BlogPost[]> {
-    return await db.select().from(blogPosts).orderBy(blogPosts.createdAt);
+    const database = await getDb();
+    return await database.select().from(blogPosts).orderBy(blogPosts.createdAt);
   }
 
   async getPublishedBlogPosts(): Promise<BlogPost[]> {
-    return await db.select().from(blogPosts)
+    const database = await getDb();
+    return await database.select().from(blogPosts)
       .where(eq(blogPosts.published, true))
       .orderBy(blogPosts.createdAt);
   }
 
   async getBlogPost(slug: string): Promise<BlogPost | undefined> {
-    const [post] = await db.select().from(blogPosts).where(eq(blogPosts.slug, slug));
+    const database = await getDb();
+    const [post] = await database.select().from(blogPosts).where(eq(blogPosts.slug, slug));
     return post || undefined;
   }
 
   async createBlogPost(insertPost: InsertBlogPost): Promise<BlogPost> {
-    const [post] = await db
+    const database = await getDb();
+    const [post] = await database
       .insert(blogPosts)
       .values(insertPost)
       .returning();
@@ -354,7 +366,8 @@ export class DatabaseStorage implements IStorage {
   }
 
   async createContactMessage(insertMessage: InsertContactMessage): Promise<ContactMessage> {
-    const [message] = await db
+    const database = await getDb();
+    const [message] = await database
       .insert(contactMessages)
       .values(insertMessage)
       .returning();
