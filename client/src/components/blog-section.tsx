@@ -97,7 +97,7 @@ export default function BlogSection() {
         <div className="text-center mt-12">
           <a
             href="#blog"
-            className="inline-flex items-center bg-primary text-white px-8 py-3 rounded-lg font-semibold hover:bg-primary/90 transition-colors duration-200"
+            className="inline-flex items-center bg-primary text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors duration-200"
           >
             Vedi tutti gli articoli
             <ArrowRight className="w-5 h-5 ml-2" />
