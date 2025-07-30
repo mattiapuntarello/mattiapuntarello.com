@@ -1,8 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 import { ArrowRight } from "lucide-react";
 import { BlogPost } from "@shared/schema";
+import { useLanguage } from "@/context/language-context";
 
 export default function BlogSection() {
+  const { t } = useLanguage();
   const { data: posts, isLoading } = useQuery<BlogPost[]>({
     queryKey: ["/api/blog"],
   });
@@ -12,9 +14,9 @@ export default function BlogSection() {
       <section id="blog" className="py-16 lg:py-24 bg-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl lg:text-4xl font-bold text-secondary mb-4">Blog & Insights</h2>
+            <h2 className="text-3xl lg:text-4xl font-bold text-secondary mb-4">{t("blog", "title")}</h2>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Condivido le mie esperienze, tutorial e riflessioni sul mondo dello sviluppo web e del design.
+              {t("blog", "description")}
             </p>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -67,7 +69,7 @@ export default function BlogSection() {
                     {post.category}
                   </span>
                   <span className="text-gray-500 text-sm">
-                    {post.readTime} min lettura
+                    {post.readTime} {t("blog", "readTime")}
                   </span>
                 </div>
                 <h3 className="text-xl font-semibold text-secondary mb-3 hover:text-primary transition-colors">
@@ -86,7 +88,7 @@ export default function BlogSection() {
                     href={`#blog/${post.slug}`}
                     className="text-primary hover:text-blue-700 font-medium inline-flex items-center"
                   >
-                    Leggi tutto <ArrowRight className="w-4 h-4 ml-1" />
+                    {t("blog", "readMore")} <ArrowRight className="w-4 h-4 ml-1" />
                   </a>
                 </div>
               </div>
@@ -99,7 +101,7 @@ export default function BlogSection() {
             href="#blog"
             className="inline-flex items-center bg-primary text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors duration-200"
           >
-            Vedi tutti gli articoli
+            {t("blog", "viewAll")}
             <ArrowRight className="w-5 h-5 ml-2" />
           </a>
         </div>

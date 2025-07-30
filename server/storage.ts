@@ -15,6 +15,8 @@ import {
   type ContactMessage,
   type InsertContactMessage
 } from "@shared/schema";
+import { db } from "./db";
+import { eq } from "drizzle-orm";
 
 export interface IStorage {
   getUser(id: number): Promise<User | undefined>;
@@ -200,29 +202,41 @@ export class MemStorage implements IStorage {
   }
 
   async getPortfolioProjects(): Promise<PortfolioProject[]> {
-    return Array.from(this.portfolioProjects.values()).sort((a, b) => a.order - b.order);
+    return Array.from(this.portfolioProjects.values()).sort((a, b) => (a.order || 0) - (b.order || 0));
   }
 
   async getFeaturedProjects(): Promise<PortfolioProject[]> {
     return Array.from(this.portfolioProjects.values())
       .filter(project => project.featured)
-      .sort((a, b) => a.order - b.order);
+      .sort((a, b) => (a.order || 0) - (b.order || 0));
   }
 
   async createPortfolioProject(insertProject: InsertPortfolioProject): Promise<PortfolioProject> {
     const id = this.currentProjectId++;
-    const project: PortfolioProject = { ...insertProject, id };
+    const project: PortfolioProject = { 
+      ...insertProject, 
+      id,
+      demoUrl: insertProject.demoUrl || null,
+      codeUrl: insertProject.codeUrl || null,
+      featured: insertProject.featured || false,
+      order: insertProject.order || 0
+    };
     this.portfolioProjects.set(id, project);
     return project;
   }
 
   async getTimelineItems(): Promise<TimelineItem[]> {
-    return Array.from(this.timelineItems.values()).sort((a, b) => a.order - b.order);
+    return Array.from(this.timelineItems.values()).sort((a, b) => (a.order || 0) - (b.order || 0));
   }
 
   async createTimelineItem(insertItem: InsertTimelineItem): Promise<TimelineItem> {
     const id = this.currentTimelineId++;
-    const item: TimelineItem = { ...insertItem, id };
+    const item: TimelineItem = { 
+      ...insertItem, 
+      id,
+      endDate: insertItem.endDate || null,
+      order: insertItem.order || 0
+    };
     this.timelineItems.set(id, item);
     return item;
   }
@@ -248,6 +262,7 @@ export class MemStorage implements IStorage {
     const post: BlogPost = { 
       ...insertPost, 
       id, 
+      published: insertPost.published || false,
       createdAt: new Date()
     };
     this.blogPosts.set(id, post);
@@ -266,4 +281,85 @@ export class MemStorage implements IStorage {
   }
 }
 
-export const storage = new MemStorage();
+export class DatabaseStorage implements IStorage {
+  async getUser(id: number): Promise<User | undefined> {
+    const [user] = await db.select().from(users).where(eq(users.id, id));
+    return user || undefined;
+  }
+
+  async getUserByUsername(username: string): Promise<User | undefined> {
+    const [user] = await db.select().from(users).where(eq(users.username, username));
+    return user || undefined;
+  }
+
+  async createUser(insertUser: InsertUser): Promise<User> {
+    const [user] = await db
+      .insert(users)
+      .values(insertUser)
+      .returning();
+    return user;
+  }
+
+  async getPortfolioProjects(): Promise<PortfolioProject[]> {
+    return await db.select().from(portfolioProjects).orderBy(portfolioProjects.order);
+  }
+
+  async getFeaturedProjects(): Promise<PortfolioProject[]> {
+    return await db.select().from(portfolioProjects)
+      .where(eq(portfolioProjects.featured, true))
+      .orderBy(portfolioProjects.order);
+  }
+
+  async createPortfolioProject(insertProject: InsertPortfolioProject): Promise<PortfolioProject> {
+    const [project] = await db
+      .insert(portfolioProjects)
+      .values(insertProject)
+      .returning();
+    return project;
+  }
+
+  async getTimelineItems(): Promise<TimelineItem[]> {
+    return await db.select().from(timelineItems).orderBy(timelineItems.order);
+  }
+
+  async createTimelineItem(insertItem: InsertTimelineItem): Promise<TimelineItem> {
+    const [item] = await db
+      .insert(timelineItems)
+      .values(insertItem)
+      .returning();
+    return item;
+  }
+
+  async getBlogPosts(): Promise<BlogPost[]> {
+    return await db.select().from(blogPosts).orderBy(blogPosts.createdAt);
+  }
+
+  async getPublishedBlogPosts(): Promise<BlogPost[]> {
+    return await db.select().from(blogPosts)
+      .where(eq(blogPosts.published, true))
+      .orderBy(blogPosts.createdAt);
+  }
+
+  async getBlogPost(slug: string): Promise<BlogPost | undefined> {
+    const [post] = await db.select().from(blogPosts).where(eq(blogPosts.slug, slug));
+    return post || undefined;
+  }
+
+  async createBlogPost(insertPost: InsertBlogPost): Promise<BlogPost> {
+    const [post] = await db
+      .insert(blogPosts)
+      .values(insertPost)
+      .returning();
+    return post;
+  }
+
+  async createContactMessage(insertMessage: InsertContactMessage): Promise<ContactMessage> {
+    const [message] = await db
+      .insert(contactMessages)
+      .values(insertMessage)
+      .returning();
+    return message;
+  }
+}
+
+export const storage = new DatabaseStorage();

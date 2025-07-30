@@ -1,8 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 import { ExternalLink, Github } from "lucide-react";
 import { PortfolioProject } from "@shared/schema";
+import { useLanguage } from "@/context/language-context";
 
 export default function PortfolioSection() {
+  const { t } = useLanguage();
   const { data: projects, isLoading } = useQuery<PortfolioProject[]>({
     queryKey: ["/api/portfolio"],
   });
@@ -12,9 +14,9 @@ export default function PortfolioSection() {
       <section id="portfolio" className="py-16 lg:py-24 bg-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl lg:text-4xl font-bold text-secondary mb-4">Portfolio</h2>
+            <h2 className="text-3xl lg:text-4xl font-bold text-secondary mb-4">{t("portfolio", "title")}</h2>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Una selezione dei miei progetti più significativi, dalle applicazioni web moderne alle soluzioni enterprise.
+              {t("portfolio", "description")}
             </p>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -73,7 +75,7 @@ export default function PortfolioSection() {
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      <ExternalLink className="w-4 h-4 mr-1" /> Demo Live
+                      <ExternalLink className="w-4 h-4 mr-1" /> {t("portfolio", "demoLive")}
                     </a>
                   )}
                   {project.codeUrl && (
@@ -83,7 +85,7 @@ export default function PortfolioSection() {
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      <Github className="w-4 h-4 mr-1" /> Codice
+                      <Github className="w-4 h-4 mr-1" /> {t("portfolio", "code")}
                     </a>
                   )}
                 </div>

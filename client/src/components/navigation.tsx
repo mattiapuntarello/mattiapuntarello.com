@@ -1,9 +1,12 @@
 import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
+import { useLanguage } from "@/context/language-context";
+import LanguageToggle from "@/components/language-toggle";
 
 export default function Navigation() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const { t } = useLanguage();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -34,37 +37,38 @@ export default function Navigation() {
             <div className="font-bold text-xl text-secondary">
               Mattia Puntarello
             </div>
-            <div className="hidden md:flex space-x-8">
+            <div className="hidden md:flex space-x-8 items-center">
               <button
                 onClick={() => scrollToSection("home")}
                 className="text-gray-600 hover:text-primary transition-colors duration-200 font-medium"
               >
-                Home
+                {t("navigation", "home")}
               </button>
               <button
                 onClick={() => scrollToSection("portfolio")}
                 className="text-gray-600 hover:text-primary transition-colors duration-200 font-medium"
               >
-                Portfolio
+                {t("navigation", "portfolio")}
               </button>
               <button
                 onClick={() => scrollToSection("history")}
                 className="text-gray-600 hover:text-primary transition-colors duration-200 font-medium"
               >
-                Storia
+                {t("navigation", "history")}
               </button>
               <button
                 onClick={() => scrollToSection("blog")}
                 className="text-gray-600 hover:text-primary transition-colors duration-200 font-medium"
               >
-                Blog
+                {t("navigation", "blog")}
               </button>
               <button
                 onClick={() => scrollToSection("contact")}
                 className="text-gray-600 hover:text-primary transition-colors duration-200 font-medium"
               >
-                Contatti
+                {t("navigation", "contact")}
               </button>
+              <LanguageToggle />
             </div>
             <button
               className="md:hidden text-gray-600 hover:text-primary"
@@ -88,32 +92,35 @@ export default function Navigation() {
               onClick={() => scrollToSection("home")}
               className="block text-lg text-gray-700 hover:text-primary transition-colors w-full text-left"
             >
-              Home
+              {t("navigation", "home")}
             </button>
             <button
               onClick={() => scrollToSection("portfolio")}
               className="block text-lg text-gray-700 hover:text-primary transition-colors w-full text-left"
             >
-              Portfolio
+              {t("navigation", "portfolio")}
             </button>
             <button
               onClick={() => scrollToSection("history")}
               className="block text-lg text-gray-700 hover:text-primary transition-colors w-full text-left"
             >
-              Storia
+              {t("navigation", "history")}
             </button>
             <button
               onClick={() => scrollToSection("blog")}
               className="block text-lg text-gray-700 hover:text-primary transition-colors w-full text-left"
             >
-              Blog
+              {t("navigation", "blog")}
             </button>
             <button
               onClick={() => scrollToSection("contact")}
               className="block text-lg text-gray-700 hover:text-primary transition-colors w-full text-left"
             >
-              Contatti
+              {t("navigation", "contact")}
             </button>
+            <div className="pt-4">
+              <LanguageToggle />
+            </div>
           </div>
         </div>
       </div>
