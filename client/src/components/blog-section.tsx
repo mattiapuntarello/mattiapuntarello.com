@@ -73,7 +73,7 @@ export default function BlogSection() {
                   </span>
                 </div>
                 <h3 className="text-xl font-semibold text-secondary mb-3 hover:text-primary transition-colors">
-                  <a href={`#blog/${post.slug}`}>
+                  <a href={`/blog/${post.slug}`}>
                     {post.title}
                   </a>
                 </h3>
@@ -85,7 +85,7 @@ export default function BlogSection() {
                     {formatDate(post.createdAt!)}
                   </span>
                   <a
-                    href={`#blog/${post.slug}`}
+                    href={`/blog/${post.slug}`}
                     className="text-primary hover:text-blue-700 font-medium inline-flex items-center"
                   >
                     {t("blog", "readMore")} <ArrowRight className="w-4 h-4 ml-1" />
@@ -98,7 +98,7 @@ export default function BlogSection() {
 
         <div className="text-center mt-12">
           <a
-            href="#blog"
+            href="/blog"
             className="inline-flex items-center bg-primary text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors duration-200"
           >
             {t("blog", "viewAll")}

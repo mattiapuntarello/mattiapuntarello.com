@@ -93,6 +93,17 @@ export default function PortfolioSection() {
             </div>
           ))}
         </div>
+        
+        <div className="text-center mt-12">
+          <a
+            href="/portfolio"
+            className="inline-flex items-center gap-2 bg-primary text-white px-8 py-3 rounded-lg hover:bg-primary/90 transition-colors font-medium"
+          >
+            {language === 'it' ? 'Vedi tutti i progetti' : 'View all projects'}
+            <ExternalLink className="w-4 h-4" />
+          </a>
+        </div>
+
       </div>
     </section>
   );
